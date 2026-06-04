@@ -1,0 +1,15 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Generated calendar files
+*.ics
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
