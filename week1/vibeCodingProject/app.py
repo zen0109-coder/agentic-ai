@@ -171,15 +171,27 @@ def tasks_to_editor_df(tasks: list[Task]) -> pd.DataFrame:
     )
 
 
+def _is_blank(v) -> bool:
+    """True for None / NaN / NaT — the empty cells of a newly added editor row."""
+    if v is None:
+        return True
+    try:
+        return bool(pd.isna(v))
+    except (TypeError, ValueError):
+        return False
+
+
 def editor_df_to_tasks(df: pd.DataFrame) -> list[Task]:
     tasks: list[Task] = []
     for rec in df.to_dict(orient="records"):
-        if not str(rec.get("title", "")).strip():
-            continue
-        due = rec.get("due_date")
-        if pd.isna(due):
-            due = None
-        tasks.append(Task.model_validate({**rec, "due_date": due}))
+        # Drop blank/NaN cells so the Task model's defaults & validators apply
+        # instead of choking on a float NaN (e.g. an empty new row). Without
+        # this, str(NaN) == "nan" sneaks past a naive truthiness check.
+        clean = {k: v for k, v in rec.items() if not _is_blank(v)}
+        title = clean.get("title")
+        if not title or not str(title).strip():
+            continue  # skip rows with no real title (incl. wholly empty new rows)
+        tasks.append(Task.model_validate(clean))
     return tasks
 
 
