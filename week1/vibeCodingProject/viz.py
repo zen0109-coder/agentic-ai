@@ -14,8 +14,6 @@ import plotly.graph_objects as go
 
 from models import NO_CATEGORY, Task
 
-WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
 
 # --------------------------------------------------------------------------- #
 # Shared helpers
@@ -39,33 +37,35 @@ def tasks_to_frame(tasks: list[Task]) -> pd.DataFrame:
 
 
 def calendar_data(tasks: list[Task], week_start: date | None = None) -> dict:
-    """Group dated tasks by weekday for the calendar grid.
+    """Group dated tasks into a rolling 7-day window for the calendar grid.
 
-    Returns {"days": [(label, date, [tasks]), ...x7], "undated": [tasks]}.
-    The week shown is the one containing the earliest dated task (or this week).
+    Returns {"days": [(label, date, [tasks]), ...x7], "undated": [tasks],
+             "week_start": date, "week_end": date}.
+    By default the window starts on `week_start` (today if not given), so e.g.
+    uploading on a Thursday shows Thursday -> next Wednesday rather than a fixed
+    Monday-Sunday week. Day labels are derived from the actual dates.
     """
     dated = [t for t in tasks if t.due_date]
     if week_start is None:
-        anchor = min((t.due_date for t in dated), default=date.today())
-        week_start = anchor - timedelta(days=anchor.weekday())  # back to Monday
+        week_start = date.today()  # rolling window: today + next 6 days
 
     week_end = week_start + timedelta(days=6)
     days = []
-    for i, name in enumerate(WEEKDAYS):
+    for i in range(7):
         day = week_start + timedelta(days=i)
         day_tasks = sorted(
             [t for t in dated if t.due_date == day],
             key=lambda t: {"high": 0, "medium": 1, "low": 2}.get(t.priority, 1),
         )
-        days.append((name, day, day_tasks))
+        days.append((day.strftime("%A"), day, day_tasks))  # label e.g. "Thursday"
 
-    # Anything without a date, or dated outside the shown week, goes in the bucket
-    # so no task silently disappears from the view.
+    # Anything without a date, or dated outside the 7-day window, goes in the
+    # bucket so no task silently disappears from the view.
     other = [
         t for t in tasks
         if not t.due_date or not (week_start <= t.due_date <= week_end)
     ]
-    return {"days": days, "undated": other, "week_start": week_start}
+    return {"days": days, "undated": other, "week_start": week_start, "week_end": week_end}
 
 
 # --------------------------------------------------------------------------- #

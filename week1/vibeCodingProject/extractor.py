@@ -33,8 +33,11 @@ Rules:
 - category: a short bucket like Pets, Bills, Groceries, Chores, Errands, Social,
   Health, Home, Car, Plans. Reuse categories consistently.
 - due_date: resolve relative references ("Friday", "this weekend", "tomorrow", "the 5th")
-  to an absolute ISO date (YYYY-MM-DD) using TODAY as the reference. If no date is
-  implied, use null. Saturday/Sunday = "this weekend".
+  to an absolute ISO date (YYYY-MM-DD), anchored to TODAY -- NOT to the chat's message
+  timestamps (the chat may be days or weeks old). If no date is implied, use null.
+  Saturday/Sunday = "this weekend".
+  HARD RULE: due_date must NEVER be earlier than TODAY. If a reference would land before
+  TODAY, set it to TODAY. If a task is already completed (status "done"), set due_date to null.
 - priority: "high", "medium", or "low" based on urgency in the conversation.
 - effort_minutes: your best integer estimate of how long the task realistically takes
   (a quick errand ~15, groceries ~45, fixing a faucet ~90, etc.).
@@ -52,6 +55,20 @@ def has_api_key() -> bool:
     return bool(os.getenv("OPENAI_API_KEY", "").strip())
 
 
+def _enforce_future_dates(tasks: list[Task], today: date) -> list[Task]:
+    """Safety net: no task should be scheduled in the past.
+
+    Completed tasks lose their (past) date; any pending task dated before TODAY
+    is clamped to TODAY. Mirrors the prompt's HARD RULE in case the model slips.
+    """
+    for t in tasks:
+        if t.status == "done":
+            t.due_date = None
+        elif t.due_date is not None and t.due_date < today:
+            t.due_date = today
+    return tasks
+
+
 def extract_tasks(
     chat_text: str, today: date | None = None
 ) -> tuple[list[Task], list[str]]:
@@ -63,14 +80,16 @@ def extract_tasks(
     today = today or date.today()
 
     if not has_api_key():
-        return _demo_tasks(today)
+        tasks, participants = _demo_tasks(today)
+        return _enforce_future_dates(tasks, today), participants
 
     # Imported lazily so the app still runs (demo mode) without the dep configured.
     from openai import OpenAI
 
     client = OpenAI()
     user_prompt = (
-        f"TODAY is {today.isoformat()} ({today.strftime('%A')}).\n\n"
+        f"TODAY is {today.isoformat()} ({today.strftime('%A')}). "
+        f"All due_date values must be {today.isoformat()} or later.\n\n"
         f"Here is the exported chat:\n\n{chat_text}"
     )
 
@@ -101,7 +120,7 @@ def extract_tasks(
         if t.assignee not in participants and t.assignee != "Unassigned":
             participants.append(t.assignee)
 
-    return tasks, participants
+    return _enforce_future_dates(tasks, today), participants
 
 
 def _demo_tasks(today: date) -> tuple[list[Task], list[str]]:
