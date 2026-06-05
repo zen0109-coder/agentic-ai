@@ -274,8 +274,11 @@ def render_explore() -> None:
 
 def render_calendar(tasks: list[Task], colors: dict[str, str]) -> None:
     data = viz.calendar_data(tasks)
-    ws = data["week_start"]
-    st.caption(f"Week of **{ws.strftime('%b %d, %Y')}** — colored by person.")
+    ws, we = data["week_start"], data["week_end"]
+    st.caption(
+        f"Next 7 days — **{ws.strftime('%a, %b %d')} → {we.strftime('%a, %b %d')}** — "
+        "colored by person."
+    )
 
     cols = st.columns(7, gap="small")
     for col, (name, day, day_tasks) in zip(cols, data["days"]):
@@ -288,7 +291,7 @@ def render_calendar(tasks: list[Task], colors: dict[str, str]) -> None:
                 _task_chip(t, colors)
 
     if data["undated"]:
-        st.markdown("###### 📌 No date / other weeks")
+        st.markdown("###### 📌 No date / outside the next 7 days")
         chip_cols = st.columns(4)
         for i, t in enumerate(data["undated"]):
             with chip_cols[i % 4]:
