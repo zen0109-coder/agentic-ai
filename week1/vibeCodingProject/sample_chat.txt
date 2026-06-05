@@ -1,35 +1,34 @@
-6/1/26, 8:12 AM - Priya: Morning! Don't forget we have to drop Bruno at the sitter's on Wednesday before work
-6/1/26, 8:13 AM - Utsav: oh right, what time does she open?
-6/1/26, 8:13 AM - Priya: 7:30am. So we need to leave by 7
-6/1/26, 8:14 AM - Utsav: ok I'll do the dropoff since I'm driving that side anyway
-6/1/26, 8:15 AM - Priya: thank you! and can you pick him up Friday evening? she closes at 6
-6/1/26, 8:16 AM - Utsav: hmm Friday is tight for me, can you do the Friday pickup?
-6/1/26, 8:16 AM - Priya: yeah I'll grab him Friday
-6/1/26, 9:02 AM - Priya: also the electricity bill is due on the 5th, it's like $140
-6/1/26, 9:03 AM - Utsav: I'll pay it today so we don't forget
-6/1/26, 12:30 PM - Utsav: we're almost out of dog food btw, and coffee
-6/1/26, 12:31 PM - Priya: add it to the grocery run. I can go to the store tomorrow after work
-6/1/26, 12:32 PM - Priya: making a list: dog food, coffee, eggs, spinach, pasta, dish soap
-6/1/26, 12:33 PM - Utsav: oh add paper towels too
-6/1/26, 6:40 PM - Priya: what are we doing this weekend? my parents asked if we want to do brunch Saturday
-6/1/26, 6:42 PM - Utsav: brunch sounds good. can you book a table for 4 at that place near the park?
-6/1/26, 6:43 PM - Priya: will do. Saturday 11am
-6/1/26, 6:45 PM - Utsav: also I want to finally fix the leaky kitchen faucet this weekend
-6/1/26, 6:46 PM - Priya: please do, it's been dripping for 2 weeks lol
-6/2/26, 7:55 AM - Priya: rent is due on the 1st of next month, just flagging early
-6/2/26, 7:56 AM - Utsav: noted, I'll transfer it on the 30th
-6/2/26, 1:15 PM - Utsav: car is making a weird noise, I should take it in
-6/2/26, 1:16 PM - Priya: book a service appointment? maybe next week
-6/2/26, 1:17 PM - Utsav: yeah I'll call the garage tomorrow and schedule something
-6/2/26, 5:30 PM - Priya: got the groceries! but they were out of spinach, will get it later
-6/2/26, 5:31 PM - Utsav: no worries. did you get the dog food?
-6/2/26, 5:31 PM - Priya: yes got everything else
-6/2/26, 8:10 PM - Priya: oh we need to send Aditi a birthday gift, her birthday is Sunday
-6/2/26, 8:11 PM - Utsav: can you order something online? you know what she likes
-6/2/26, 8:12 PM - Priya: ok I'll order a gift card and a book tonight
-6/3/26, 7:05 AM - Utsav: dropping Bruno now, leaving in 5
-6/3/26, 7:06 AM - Priya: great. don't forget his food bag this time 😄
-6/3/26, 9:20 AM - Priya: reminder to call the dentist, we both need to schedule cleanings
-6/3/26, 9:21 AM - Utsav: ugh ok I'll call them this afternoon and book for both of us
-6/3/26, 12:00 PM - Priya: also can you water the plants tonight? I did them yesterday
-6/3/26, 12:01 PM - Utsav: yep I'll handle plant duty tonight
+[5/31/26, 4:32:25 PM] House Related Tasks: ‎You created group “House Related Tasks”
+[5/31/26, 4:32:25 PM] House Related Tasks: ‎Messages and calls are end-to-end encrypted. Only people in this chat can read, listen to, or share them.
+[5/31/26, 4:32:30 PM] Utsav 😄: Hi
+[6/1/26, 8:05:12 AM] Wife ❤️: Morning! lots going on this week, let's get organized
+[6/1/26, 8:06:40 AM] Utsav 😄: yeah let's list it all out here
+[6/1/26, 8:08:02 AM] Wife ❤️: I dropped Bruno at the sitter this morning already
+[6/1/26, 8:08:45 AM] Utsav 😄: nice. can you pick him up Friday? she closes at 6
+[6/1/26, 8:09:20 AM] Wife ❤️: yes I'll grab Bruno on Friday
+[6/1/26, 9:15:33 AM] Utsav 😄: I'll take him for his vet checkup next Tuesday, it's overdue
+[6/1/26, 9:16:10 AM] Wife ❤️: good. also the electricity bill is due by the 10th, about $140
+[6/1/26, 9:17:02 AM] Utsav 😄: I'll pay the electricity bill before the 10th
+[6/1/26, 12:20:48 PM] Wife ❤️: my parents want to do brunch this weekend, Saturday
+[6/1/26, 12:22:30 PM] Utsav 😄: sounds good, can you book a table for 4 near the park for Saturday?
+[6/1/26, 12:23:05 PM] Wife ❤️: will do
+[6/1/26, 1:10:18 PM] Utsav 😄: the car's making a weird noise, I'll book a service appointment for next Wednesday
+[6/1/26, 6:40:19 PM] Wife ❤️: we both need dental cleanings, can you call and book for Thursday?
+[6/1/26, 6:41:33 PM] Utsav 😄: yeah I'll call the dentist and set it up for Thursday
+[6/1/26, 6:45:51 PM] Wife ❤️: there's an Amazon package to return, the deadline is Monday
+[6/1/26, 6:46:30 PM] Utsav 😄: there's a drop-off near your office right? can you do it Monday?
+[6/1/26, 6:47:10 PM] Wife ❤️: yep I'll return it Monday on my way in
+[6/2/26, 7:50:25 AM] Utsav 😄: rent is due on the 1st of next month, I'll transfer it then
+[6/2/26, 7:52:40 AM] Wife ❤️: and the car insurance renewal is due by the 15th
+[6/2/26, 7:53:20 AM] Utsav 😄: I have the login, I'll renew the insurance before the 15th
+[6/2/26, 10:30:14 AM] Wife ❤️: a few things with no rush, just don't want to forget -
+[6/2/26, 10:31:02 AM] Wife ❤️: we should declutter and organize the closets sometime this week
+[6/2/26, 10:31:40 AM] Utsav 😄: agreed. I'll also organize the garage this week whenever I get time
+[6/2/26, 10:32:25 AM] Wife ❤️: can you refill your prescription whenever you get a chance?
+[6/2/26, 10:33:00 AM] Utsav 😄: yeah I'll handle the prescription refill
+[6/2/26, 2:15:48 PM] Utsav 😄: the kitchen faucet is leaking, I'll fix it sometime soon
+[6/2/26, 5:33:14 PM] Wife ❤️: we need a proper grocery run this week, fridge is empty
+[6/2/26, 5:34:02 PM] Utsav 😄: can you do the grocery run? I'll do a meal prep afterwards
+[6/2/26, 5:34:40 PM] Wife ❤️: ok I'll get groceries this week
+[6/3/26, 9:25:18 AM] Wife ❤️: also the plants need watering this week, they're looking sad
+[6/3/26, 9:26:05 AM] Utsav 😄: I'll take care of watering the plants

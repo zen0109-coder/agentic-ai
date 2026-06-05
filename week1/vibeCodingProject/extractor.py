@@ -32,10 +32,13 @@ Rules:
   it clear someone took it on, use that name. If genuinely unclear, use "Unassigned".
 - category: a short bucket like Pets, Bills, Groceries, Chores, Errands, Social,
   Health, Home, Car, Plans. Reuse categories consistently.
-- due_date: resolve relative references ("Friday", "this weekend", "tomorrow", "the 5th")
+- due_date: resolve relative references ("Friday", "this weekend", "next Tuesday", "the 5th")
   to an absolute ISO date (YYYY-MM-DD), anchored to TODAY -- NOT to the chat's message
-  timestamps (the chat may be days or weeks old). If no date is implied, use null.
-  Saturday/Sunday = "this weekend".
+  timestamps (the chat may be days or weeks old). Saturday/Sunday = "this weekend".
+  Only set due_date when the chat gives a SPECIFIC day or deadline. If the timing is vague
+  ("soon", "this week", "later", "sometime", "whenever", "no rush") or not mentioned at all,
+  use null -- the app will schedule it automatically. Do NOT invent a specific day for vague
+  tasks; prefer null so they can be spread evenly across the week.
   HARD RULE: due_date must NEVER be earlier than TODAY. If a reference would land before
   TODAY, set it to TODAY. If a task is already completed (status "done"), set due_date to null.
 - priority: "high", "medium", or "low" based on urgency in the conversation.
@@ -55,17 +58,39 @@ def has_api_key() -> bool:
     return bool(os.getenv("OPENAI_API_KEY", "").strip())
 
 
-def _enforce_future_dates(tasks: list[Task], today: date) -> list[Task]:
-    """Safety net: no task should be scheduled in the past.
+def _schedule_tasks(tasks: list[Task], today: date) -> list[Task]:
+    """Finalize due dates with smart, balanced scheduling.
 
-    Completed tasks lose their (past) date; any pending task dated before TODAY
-    is clamped to TODAY. Mirrors the prompt's HARD RULE in case the model slips.
+    - Completed tasks are unscheduled (date -> None).
+    - Any pending date in the past is clamped to TODAY (safety net for the prompt).
+    - Tasks the model left undated (vague/unstated timing) are spread across the
+      next 7 days, filling the least-loaded day first (by total effort), with
+      higher-priority tasks placed first. Explicit dates are always honored.
     """
+    from datetime import timedelta
+
+    horizon = [today + timedelta(days=i) for i in range(7)]
+    load = {d: 0 for d in horizon}  # total effort minutes already on each day
+
+    undated: list[Task] = []
     for t in tasks:
         if t.status == "done":
             t.due_date = None
-        elif t.due_date is not None and t.due_date < today:
+            continue
+        if t.due_date is None:
+            undated.append(t)
+            continue
+        if t.due_date < today:  # clamp stray past dates forward
             t.due_date = today
+        if t.due_date in load:  # count toward balancing only if within the window
+            load[t.due_date] += t.effort_minutes
+
+    # Distribute undated tasks onto the lightest day (high priority first).
+    prio_rank = {"high": 0, "medium": 1, "low": 2}
+    for t in sorted(undated, key=lambda x: (prio_rank.get(x.priority, 1), -x.effort_minutes)):
+        day = min(horizon, key=lambda d: (load[d], d))  # least-loaded, then earliest
+        t.due_date = day
+        load[day] += t.effort_minutes
     return tasks
 
 
@@ -81,7 +106,7 @@ def extract_tasks(
 
     if not has_api_key():
         tasks, participants = _demo_tasks(today)
-        return _enforce_future_dates(tasks, today), participants
+        return _schedule_tasks(tasks, today), participants
 
     # Imported lazily so the app still runs (demo mode) without the dep configured.
     from openai import OpenAI
@@ -120,7 +145,7 @@ def extract_tasks(
         if t.assignee not in participants and t.assignee != "Unassigned":
             participants.append(t.assignee)
 
-    return _enforce_future_dates(tasks, today), participants
+    return _schedule_tasks(tasks, today), participants
 
 
 def _demo_tasks(today: date) -> tuple[list[Task], list[str]]:
